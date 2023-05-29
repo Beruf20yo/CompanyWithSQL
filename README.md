@@ -3,7 +3,7 @@
 Данный проект улучшает проект Company путём добавления Postgres SQL и использованием JDBC    
 Всё, что ранее хранилось в списках, теперь реализуется с помощью БД  
 Для того, чтобы программа полноценно функционировала нужно создать базу данных infoofcompanies  
-CREATE DATE infoofcompanies  
+CREATE DATE infoofcompanies;  
 а также нужно создать две таблицы в данной базе данных:
 CREATE TABLE company(  
     id_company serial primary key,  
