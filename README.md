@@ -10,13 +10,13 @@ CREATE TABLE company(
     name_company varchar(100),  
     income_company numeric default 0  
 );  
-CREATE TABLE employee(
-    id_employee serial primary key,
-    id_company int references company(id_company) on delete cascade,
-    type_employee varchar(20),
-    mounth_salary numeric,
-    income_for_company numeric default 0
-);
+CREATE TABLE employee(  
+    id_employee serial primary key,  
+    id_company int references company(id_company) on delete cascade,  
+    type_employee varchar(20),  
+    mounth_salary numeric,  
+    income_for_company numeric default 0  
+    );
   
   Также необходимо проверить значения по умолчанию, в программе они находятся в SQLWorker.java:  
   User: postgres  
