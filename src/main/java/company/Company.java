@@ -1,6 +1,7 @@
 package company;
 
 import employee.Employee;
+import sqlwork.SQLRequests;
 import sqlwork.SQLWork;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,20 +9,27 @@ import java.util.List;
 
 public class Company {
 
-   protected SQLWork sqlWork = new SQLWork();
+   protected SQLWork sqlWork;
+   protected SQLRequests sqlRequests = new SQLRequests();
+
+   public Company(SQLWork sqlWork){
+       this.sqlWork = sqlWork;
+   }
 
     public void hire(Employee employee, int idCompany) {
-        sqlWork.generateInsertEmployee(idCompany,employee.getTypeEmployee(),employee.getMonthSalary(),employee.incomeForCompany());
-        sqlWork.generateUpdateCompanyIncome(idCompany,employee.incomeForCompany());
-        if(getIncome(idCompany)>10000000){
-            sqlWork.generateUpdateTopManagerSalary(idCompany,employee.getRatePerMounth());
-        }
+       sqlWork.generateExecute(sqlRequests.InsertEmployee(idCompany,employee.getTypeEmployee(),
+               employee.getMonthSalary(),employee.incomeForCompany()));
+       sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.incomeForCompany()));
+       if(getIncome(idCompany)>10000000){
+            sqlWork.generateExecute(sqlRequests.updateTopManagerSalary(idCompany,employee.getRatePerMounth()));
+       }
     }
 
     public void hireAll(List<Employee> lisdToAdd, int idCompany) {
         for(Employee employee: lisdToAdd){
-            sqlWork.generateInsertEmployee(idCompany,employee.getTypeEmployee(),employee.getMonthSalary(),employee.incomeForCompany());
-            sqlWork.generateUpdateCompanyIncome(idCompany,employee.incomeForCompany());
+            sqlWork.generateExecute(sqlRequests.InsertEmployee(idCompany,employee.getTypeEmployee(),
+                    employee.getMonthSalary(),employee.incomeForCompany()));
+            sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.incomeForCompany()));
         }
     }
 
@@ -30,8 +38,8 @@ public class Company {
         if(idAndIncome[0] != idCompany){
             System.out.println("Сотрудника с таким id нет в вашей компании");
         } else {
-            sqlWork.generateUpdateCompanyIncome(idAndIncome[0],-idAndIncome[1]);
-            sqlWork.generateDeleteEmployee(id);
+            sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idAndIncome[0],-idAndIncome[1]));
+            sqlWork.generateExecute(sqlRequests.deleteEmployee(id));
         }
     }
 
@@ -39,15 +47,16 @@ public class Company {
         return sqlWork.generateSelectCountOfEmployee(idComapany);
     }
     public void fire(int idCompany) {
-        sqlWork.generateSimpleDelete(idCompany);
+       sqlWork.generateExecute(sqlRequests.simpleDelete(idCompany));
+
     }
 
-    public List<Integer> getTopOrLowSalaryStaff(int idCompany, int count, int setChose) {
+    public List<Integer> getTopOrLowSalaryStaff(int idCompany, int count, String chose) {
         ArrayList<Integer> listOfSalary = new ArrayList<>();
-        if(setChose == 0){
-            listOfSalary.addAll(sqlWork.generateTopOrLowSalaryStaff(count,idCompany,0));
-        }else {
-            listOfSalary.addAll(sqlWork.generateTopOrLowSalaryStaff(count,idCompany,1));
+       switch (chose){
+            case "Top" -> listOfSalary.addAll(sqlWork.generateTopOrLowSalaryStaff(count,idCompany,"Top"));
+            case "Low" -> listOfSalary.addAll(sqlWork.generateTopOrLowSalaryStaff(count,idCompany,"Low"));
+            default -> throw new IllegalStateException("Unexpected value: " + chose);
         }
         return listOfSalary;
     }
