@@ -1,11 +1,14 @@
 package employee;
 
+import lombok.Getter;
 
-public interface Employee {
-    int getMonthSalary();
-    int incomeForCompany();
-    String getTypeEmployee();
-    int getRatePerMounth();
+@Getter
+public abstract class Employee {
+    int idCompany;
+    int monthSalary;
+    int incomeForCompany;
+    String typeEmployee;
+    int ratePerMounth;
 
 
 }

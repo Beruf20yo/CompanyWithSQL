@@ -18,8 +18,8 @@ public class Company {
 
     public void hire(Employee employee, int idCompany) {
        sqlWork.generateExecute(sqlRequests.InsertEmployee(idCompany,employee.getTypeEmployee(),
-               employee.getMonthSalary(),employee.incomeForCompany()));
-       sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.incomeForCompany()));
+               employee.getMonthSalary(),employee.getIncomeForCompany()));
+       sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.getIncomeForCompany()));
        if(getIncome(idCompany)>10000000){
             sqlWork.generateExecute(sqlRequests.updateTopManagerSalary(idCompany,employee.getRatePerMounth()));
        }
@@ -28,8 +28,8 @@ public class Company {
     public void hireAll(List<Employee> lisdToAdd, int idCompany) {
         for(Employee employee: lisdToAdd){
             sqlWork.generateExecute(sqlRequests.InsertEmployee(idCompany,employee.getTypeEmployee(),
-                    employee.getMonthSalary(),employee.incomeForCompany()));
-            sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.incomeForCompany()));
+                    employee.getMonthSalary(),employee.getIncomeForCompany()));
+            sqlWork.generateExecute(sqlRequests.UpdateCompanyIncome(idCompany,employee.getIncomeForCompany()));
         }
     }
 

@@ -52,9 +52,9 @@ public class SQLWork {
             String SalaryStaff = "";
             List<Integer> liftOfSalary = new ArrayList<>();
             switch (setTopOrLow){
-                case "Top" -> SalaryStaff = "(select distinct mounth_salary from employee where id_company =" + idCompany + ") " +
-                        "order by employee.mounth_salary limit " + limitCountOfSalary + ";";
                 case "Low" -> SalaryStaff = "(select distinct mounth_salary from employee where id_company =" + idCompany + ") " +
+                        "order by employee.mounth_salary limit " + limitCountOfSalary + ";";
+                case "Top" -> SalaryStaff = "(select distinct mounth_salary from employee where id_company =" + idCompany + ") " +
                         "order by employee.mounth_salary desc limit " + limitCountOfSalary + ";";
             }
             result =  statement.executeQuery(SalaryStaff);
@@ -103,7 +103,7 @@ public class SQLWork {
         }
         return 0;
     }
-    
+
     public int generateSelectIncome(int idCompany){
         try (Statement statement = connection.createStatement()) {
             String newCompany = "SELECT income_company FROM company where id_company ="+ idCompany +";";

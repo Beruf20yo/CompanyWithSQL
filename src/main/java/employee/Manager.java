@@ -1,26 +1,13 @@
 package employee;
 
 
-public class Manager implements Employee {
+public class Manager extends Employee {
     protected  int ratePerMounth = 60000;
-    protected int monthSalary;
-    protected int incomeForCompany;
-    protected String typeEmployee = "Manager";
-    protected int idCompany;
-
     public Manager( int idCompany) {
+        typeEmployee = "Manager";
         this.idCompany = idCompany;
         this.incomeForCompany = setCompanyIncome();
     }
-    public int getRatePerMounth() {
-        return ratePerMounth;
-    }
-
-    @Override
-    public int getMonthSalary() {
-        return monthSalary;
-    }
-
     public int setCompanyIncome() {
         int startRange = 115000;
         int endRange = 140000;
@@ -28,12 +15,4 @@ public class Manager implements Employee {
         this.monthSalary = (incomePart * 5 / 100) + ratePerMounth;
         return incomePart;
     }
-    public int incomeForCompany() {
-        return incomeForCompany;
-    }
-
-    public String getTypeEmployee() {
-        return typeEmployee;
-    }
-
 }
